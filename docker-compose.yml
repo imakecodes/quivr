@@ -7,24 +7,24 @@ services:
     build:
       context: frontend
       dockerfile: Dockerfile
-    container_name: web
+    container_name: quivr-web
     restart: always
     volumes:
       - ./frontend/:/app
       - /app/node_modules
       - /app/.next
     ports:
-      - 3000:3000
+      - 3050:3000
   backend:
     env_file:
       - ./backend/.env
     build:
       context: backend
       dockerfile: Dockerfile
-    container_name: backend
+    container_name: quivr-backend
     restart: always
     volumes:
       - ./backend/:/code/
       - ~/.config/gcloud:/root/.config/gcloud
     ports:
-      - 5050:5050
+      - 3051:5050

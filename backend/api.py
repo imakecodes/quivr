@@ -35,7 +35,8 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:3000",
-    "https://api.quivr.app"
+    "https://api.quivr.app",
+    "https://chat.makecodes.dev",
 ]
 
 app.add_middleware(
@@ -87,7 +88,10 @@ async def filter_file(file: UploadFile, enable_summarization: bool, supabase_cli
     else:
         file_extension = os.path.splitext(file.filename)[-1].lower()  # Convert file extension to lowercase
         if file_extension in file_processors:
-            await file_processors[file_extension](file, enable_summarization, user)
+            if isinstance(file_processors[file_extension], process_audio):
+                await file_processors[file_extension](file)
+            else:
+                await file_processors[file_extension](file, enable_summarization, user)
             return {"message": f"✅ {file.filename} has been uploaded.", "type": "success"}
         else:
             return {"message": f"❌ {file.filename} is not supported.", "type": "error"}

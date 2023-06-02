@@ -31,7 +31,7 @@ from utils import compute_sha1_from_content, documents_vector_store
 #     return transcript
 
 
-async def process_audio(upload_file: UploadFile, stats_db):
+async def process_audio(upload_file: UploadFile):
 
     file_sha = ""
     dateshort = time.strftime("%Y%m%d-%H%M%S")
